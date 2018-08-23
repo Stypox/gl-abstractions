@@ -11,7 +11,7 @@ namespace stypox::gl {
 		GLuint m_id;
 		bool m_idGenerated = false;
 	public:
-		Vbo(bool generate = true, bool bind = true);
+		Vbo();
 		template <size_t N>
 		Vbo(const std::array<GLfloat, N>& data, GLenum usage);
 		~Vbo();

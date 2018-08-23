@@ -1,13 +1,7 @@
 #include "vbo.h"
 
 namespace stypox::gl {
-	Vbo::Vbo(bool generate, bool bind) {
-		if (generate) {
-			glGenBuffers(1, &m_id);
-			if (bind)
-				glBindBuffer(GL_ARRAY_BUFFER, m_id);
-		}
-	}
+	Vbo::Vbo() {}
 	Vbo::~Vbo() {
 		glDeleteBuffers(1, &m_id);
 	}
