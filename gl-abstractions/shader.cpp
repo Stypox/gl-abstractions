@@ -128,143 +128,143 @@ namespace stypox::gl {
 
 	//float
 	template<> void Shader::uniform(const Tstr& uniformName, const GLfloat& v0) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform1f(glGetUniformLocation(m_programId, uniformName.c_str()), v0);
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const GLfloat& v0, const GLfloat& v1) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform2f(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1);
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const GLfloat& v0, const GLfloat& v1, const GLfloat& v2) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform3f(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2);
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const GLfloat& v0, const GLfloat& v1, const GLfloat& v2, const GLfloat& v3) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform4f(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2, v3);
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const std::initializer_list<GLfloat>& v0) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform1fv(glGetUniformLocation(m_programId, uniformName.c_str()), v0.size(), v0.begin());
 	}
 
 	//int
 	template<> void Shader::uniform(const Tstr& uniformName, const GLint& v0) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform1i(glGetUniformLocation(m_programId, uniformName.c_str()), v0);
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const GLint& v0, const GLint& v1) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform2i(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1);
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const GLint& v0, const GLint& v1, const GLint& v2) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform3i(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2);
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const GLint& v0, const GLint& v1, const GLint& v2, const GLint& v3) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform4i(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2, v3);
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const std::initializer_list<GLint>& v0) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform1iv(glGetUniformLocation(m_programId, uniformName.c_str()), v0.size(), v0.begin());
 	}
 
 	//unsigned int
 	template<> void Shader::uniform(const Tstr& uniformName, const GLuint& v0) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform1ui(glGetUniformLocation(m_programId, uniformName.c_str()), v0);	
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const GLuint& v0, const GLuint& v1) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform2ui(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1);
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const GLuint& v0, const GLuint& v1, const GLuint& v2) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform3ui(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2);
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const GLuint& v0, const GLuint& v1, const GLuint& v2, const GLuint& v3) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform4ui(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2, v3);
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const std::initializer_list<GLuint>& v0) {
-		glUseProgram(m_programId);
+		bind();
 		glUniform1uiv(glGetUniformLocation(m_programId, uniformName.c_str()), v0.size(), v0.begin());
 	}
 
 	//matrices (transpose disabled by default)
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2& value) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3& value) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4& value) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2x3& value) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix2x3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3x2& value) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix3x2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2x4& value) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix2x4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4x2& value) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix4x2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3x4& value) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix3x4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4x3& value) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix4x3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
 
 	//matrices (transpose chosen manually)
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2& value, GLboolean transpose) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3& value, GLboolean transpose) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4& value, GLboolean transpose) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2x3& value, GLboolean transpose) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix2x3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3x2& value, GLboolean transpose) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix3x2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2x4& value, GLboolean transpose) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix2x4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4x2& value, GLboolean transpose) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix4x2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3x4& value, GLboolean transpose) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix3x4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
 	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4x3& value, GLboolean transpose) {
-		glUseProgram(m_programId);
+		bind();
 		glUniformMatrix4x3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
 

@@ -33,7 +33,7 @@ namespace stypox::gl {
 	}
 	template <size_t N>
 	inline void Ebo::data(const std::array<GLuint, N>& data, GLenum usage) {
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
+		bind();
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, N * sizeof(GLuint), data.data(), usage);
 	}
 }
