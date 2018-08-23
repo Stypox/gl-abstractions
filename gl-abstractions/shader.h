@@ -20,8 +20,7 @@ namespace stypox::gl {
 		Tstr m_fileLog;
 		bool m_idsCreated = false;
 
-		void deleteShaders();
-		void createShaders();
+		void create();
 	public:
 		enum Step : char {
 			file = 1,
@@ -34,6 +33,8 @@ namespace stypox::gl {
 		Shader();
 		Shader(const Tpath& vertexShFilename, const Tpath& fragmentShFilename);
 		~Shader();
+
+		void remove();
 		
 		void compileFile(const Tpath& vertexShFilename, const Tpath& fragmentShFilename);
 		void compileSource(const Tstr& vertexShSource, const Tstr& fragmentShSource);

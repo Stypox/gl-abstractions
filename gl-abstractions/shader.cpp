@@ -1,16 +1,8 @@
 #include "shader.h"
 
 namespace stypox::gl {
-	void Shader::deleteShaders() {
-		if (m_idsCreated) {
-			glDeleteProgram(m_programId);
-			glDeleteShader(m_vertexShId);
-			glDeleteShader(m_fragmentShId);
-			m_idsCreated = false;
-		}
-	}
-	void Shader::createShaders() {
-		deleteShaders();
+	void Shader::create() {
+		remove();
 		m_programId = glCreateProgram();
 		m_vertexShId = glCreateShader(GL_VERTEX_SHADER);
 		m_fragmentShId = glCreateShader(GL_FRAGMENT_SHADER);
@@ -22,7 +14,16 @@ namespace stypox::gl {
 		compileFile(vertexShFilename, fragmentShFilename);
 	}
 	Shader::~Shader() {
-		deleteShaders();
+		remove();
+	}
+	
+	void Shader::remove() {
+		if (m_idsCreated) {
+			glDeleteProgram(m_programId);
+			glDeleteShader(m_vertexShId);
+			glDeleteShader(m_fragmentShId);
+			m_idsCreated = false;
+		}
 	}
 	
 	void Shader::compileFile(const Tpath& vertexShFilename, const Tpath& fragmentShFilename) {
@@ -43,7 +44,7 @@ namespace stypox::gl {
 		compileSource(vertexSource, fragmentSource);
 	}
 	void Shader::compileSource(const Tstr& vertexShSource, const Tstr& fragmentShSource) {
-		createShaders();
+		create();
 
 		const char * vertexShCStr = vertexShSource.c_str(),
 			* fragmentShCStr = fragmentShSource.c_str();

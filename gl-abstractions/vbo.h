@@ -16,11 +16,11 @@ namespace stypox::gl {
 		Vbo(const std::array<GLfloat, N>& data, GLenum usage);
 		~Vbo();
 
-		template <size_t N>
-		void data(const std::array<GLfloat, N>& data, GLenum usage);
-
 		void generate();
 		void remove();
+
+		template <size_t N>
+		void data(const std::array<GLfloat, N>& data, GLenum usage);
 
 		inline void bind() { glBindBuffer(GL_ARRAY_BUFFER, m_id); }
 		inline static void unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0); }
