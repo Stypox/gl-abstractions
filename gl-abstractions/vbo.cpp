@@ -3,7 +3,7 @@
 namespace stypox::gl {
 	Vbo::Vbo() {}
 	Vbo::~Vbo() {
-		glDeleteBuffers(1, &m_id);
+		remove();
 	}
 
 	void Vbo::generate() {

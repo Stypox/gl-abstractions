@@ -3,7 +3,7 @@
 namespace stypox::gl {
 	Ebo::Ebo() {}
 	Ebo::~Ebo() {
-		glDeleteBuffers(1, &m_id);
+		remove();
 	}
 
 	void Ebo::generate() {
