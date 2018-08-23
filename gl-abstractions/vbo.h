@@ -33,7 +33,6 @@ namespace stypox::gl {
 	}
 	template <size_t N>
 	inline void Vbo::data(const std::array<GLfloat, N>& data, GLenum usage) {
-		std::cout << N;
 		glBindBuffer(GL_ARRAY_BUFFER, m_id);
 		glBufferData(GL_ARRAY_BUFFER, N * sizeof(GLfloat), data.data(), usage);
 	}

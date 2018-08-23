@@ -1,5 +1,5 @@
-#ifndef _SP_SHADER_H_
-#define _SP_SHADER_H_
+#ifndef _STYPOX_SHADER_H_
+#define _STYPOX_SHADER_H_
 //TODO functions like getAttribLocation should save errors in a log. glGetnUniform gives errors and could be useful.
 
 #include <string>
