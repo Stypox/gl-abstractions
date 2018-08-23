@@ -22,8 +22,8 @@ namespace stypox::gl {
 		void generate();
 		void remove();
 
-		void bind();
-		static void unbind();
+		inline void bind() { glBindBuffer(GL_ARRAY_BUFFER, m_id); }
+		inline static void unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 	};
 
 	template <size_t N>

@@ -120,13 +120,6 @@ namespace stypox::gl {
 		return info;
 	}
 
-	void Shader::bind() {
-		glUseProgram(m_programId);
-	}
-	void Shader::unbind() {
-		glUseProgram(0);
-	}
-
 	GLint Shader::getAttribLocation(const Tstr& attributeVariableName) {
 		return glGetAttribLocation(m_programId, attributeVariableName.c_str());
 	}

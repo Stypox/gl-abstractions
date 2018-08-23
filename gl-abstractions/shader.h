@@ -16,7 +16,6 @@ namespace stypox::gl {
 	constexpr int maxInfoLogCharacters{512};
 
 	class Shader {
-	public:
 		GLuint m_vertexShId, m_fragmentShId, m_programId;
 		Tstr m_fileLog;
 		bool m_idsCreated = false;
@@ -43,8 +42,8 @@ namespace stypox::gl {
 		Tstr getLog(Step step);
 		Tstr debugInfo(Tstr name = "");
 
-		void bind();
-		static void unbind();
+		inline void bind() { glUseProgram(m_programId); }
+		inline static void unbind() { glUseProgram(0); }
 
 		GLint getAttribLocation(const Tstr& attributeVariableName);
 

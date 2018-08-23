@@ -25,11 +25,4 @@ namespace stypox::gl {
 			m_idGenerated = false;
 		}
 	}
-
-	void Vbo::bind() {
-		glBindBuffer(GL_ARRAY_BUFFER, m_id);
-	}
-	void Vbo::unbind() {
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
 }
