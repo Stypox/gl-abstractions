@@ -1,9 +1,7 @@
 #ifndef _STYPOX_VAO_H_
 #define _STYPOX_VAO_H_
 
-#include <array>
 #include <GL/glew.h>
-#include <sp/basicTypes.h>
 #include <sp/declarations.h>
 
 namespace stypox::gl {
