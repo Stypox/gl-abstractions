@@ -21,6 +21,11 @@ namespace stypox::gl {
 		Texture2D(GLint position, const Tpath& filename, GLenum saveFormat, GLenum wrapS, GLenum wrapT, GLenum minFilter, GLenum magFilter, GLint detailLevel = 0, bool relativeToDirectory = true);
 		~Texture2D();
 
+		Texture2D(const Texture2D& other) = delete;
+		Texture2D& operator= (const Texture2D& other) = delete;
+		Texture2D(Texture2D&& other);
+		Texture2D& operator= (Texture2D&& other);
+
 		inline GLint position() { return m_position; }
 		inline void setPosition(GLint position) { m_position = position; }
 		inline static Tpath directory() { return m_directory; }

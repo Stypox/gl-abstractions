@@ -12,6 +12,11 @@ namespace stypox::gl {
 		Vao();
 		~Vao();
 
+		Vao(const Vao& other) = delete;
+		Vao& operator= (const Vao& other) = delete;
+		Vao(Vao&& other);
+		Vao& operator= (Vao&& other);
+
 		void generate();
 		void remove();
 

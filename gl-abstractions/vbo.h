@@ -15,6 +15,11 @@ namespace stypox::gl {
 		Vbo(const std::array<GLfloat, N>& data, GLenum usage);
 		~Vbo();
 
+		Vbo(const Vbo& other) = delete;
+		Vbo& operator= (const Vbo& other) = delete;
+		Vbo(Vbo&& other);
+		Vbo& operator= (Vbo&& other);
+
 		void generate();
 		void remove();
 

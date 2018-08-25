@@ -15,6 +15,11 @@ namespace stypox::gl {
 		Ebo(const std::array<GLuint, N>& data, GLenum usage);
 		~Ebo();
 
+		Ebo(const Ebo& other) = delete;
+		Ebo& operator= (const Ebo& other) = delete;
+		Ebo(Ebo&& other);
+		Ebo& operator= (Ebo&& other);
+
 		void generate();
 		void remove();
 

@@ -25,6 +25,21 @@ namespace stypox::gl {
 		remove();
 	}
 
+	Vao::Vao(Vao&& other) :
+	m_id{other.m_id},
+	m_idGenerated{other.m_idGenerated} {
+		other.m_idGenerated = false;
+	}
+	Vao& Vao::operator= (Vao&& other) {
+		remove();
+		if (other.m_idGenerated) {
+			m_id = other.m_id;
+			m_idGenerated = true;
+			other.m_idGenerated = false;
+		}
+		return *this;
+	}
+
 	void Vao::generate() {
 		if (m_idGenerated) {
 			glDeleteVertexArrays(1, &m_id);

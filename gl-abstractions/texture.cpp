@@ -31,6 +31,26 @@ namespace stypox::gl {
 		remove();
 	}
 
+
+	Texture2D::Texture2D(Texture2D&& other) :
+	m_id{other.m_id},
+	m_position{other.m_position},
+	m_idGenerated{other.m_idGenerated},
+	m_fileOk{other.m_fileOk} {
+		other.m_idGenerated = false;
+	}
+	Texture2D& Texture2D::operator= (Texture2D&& other) {
+		m_position = other.m_position;
+		m_fileOk = other.m_fileOk;
+		remove();
+		if (other.m_idGenerated) {
+			m_id = other.m_id;
+			m_idGenerated = true;
+			other.m_idGenerated = false;
+		}
+		return *this;
+	}
+
 	void Texture2D::generate() {
 		if (m_idGenerated) {
 			glDeleteTextures(1, &m_id);

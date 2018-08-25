@@ -6,6 +6,21 @@ namespace stypox::gl {
 		remove();
 	}
 
+	Vbo::Vbo(Vbo&& other) :
+	m_id{other.m_id},
+	m_idGenerated{other.m_idGenerated} {
+		other.m_idGenerated = false;
+	}
+	Vbo& Vbo::operator= (Vbo&& other) {
+		remove();
+		if (other.m_idGenerated) {
+			m_id = other.m_id;
+			m_idGenerated = true;
+			other.m_idGenerated = false;
+		}
+		return *this;
+	}
+
 	void Vbo::generate() {
 		if (m_idGenerated) {
 			glDeleteBuffers(1, &m_id);

@@ -16,6 +16,27 @@ namespace stypox::gl {
 	Shader::~Shader() {
 		remove();
 	}
+
+	Shader::Shader(Shader&& other) :
+	m_vertexShId{other.m_vertexShId},
+	m_fragmentShId{other.m_fragmentShId},
+	m_programId{other.m_programId},
+	m_fileLog{std::move(other.m_fileLog)},
+	m_idsCreated{other.m_idsCreated} {
+		other.m_idsCreated = false;
+	}
+	Shader& Shader::operator= (Shader&& other) {
+		m_fileLog = std::move(other.m_fileLog);
+		remove();
+		if (other.m_idsCreated) {
+			m_vertexShId = other.m_vertexShId;
+			m_fragmentShId = other.m_fragmentShId;
+			m_programId = other.m_programId;
+			m_idsCreated = true;
+			other.m_idsCreated = false;
+		}
+		return *this;
+	}
 	
 	void Shader::remove() {
 		if (m_idsCreated) {

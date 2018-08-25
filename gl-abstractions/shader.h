@@ -34,6 +34,11 @@ namespace stypox::gl {
 		Shader(const Tpath& vertexShFilename, const Tpath& fragmentShFilename);
 		~Shader();
 
+		Shader(const Shader& other) = delete;
+		Shader& operator= (const Shader& other) = delete;
+		Shader(Shader&& other);
+		Shader& operator= (Shader&& other);
+
 		void remove();
 		
 		void compileFile(const Tpath& vertexShFilename, const Tpath& fragmentShFilename);
