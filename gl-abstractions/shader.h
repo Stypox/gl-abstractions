@@ -86,6 +86,4 @@ namespace stypox::gl {
 		a = static_cast<Shader::Step>(static_cast<char>(a)&static_cast<char>(b));
 	}
 }
-
-#include "shader.cpp"
 #endif

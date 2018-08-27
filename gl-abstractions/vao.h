@@ -26,6 +26,4 @@ namespace stypox::gl {
 		inline static void unbind() { glBindVertexArray(0); }
 	};
 }
-
-#include "vao.cpp"
 #endif

@@ -41,6 +41,4 @@ namespace stypox::gl {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, N * sizeof(GLuint), data.data(), usage);
 	}
 }
-
-#include "ebo.cpp"
 #endif

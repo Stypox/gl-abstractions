@@ -11,6 +11,8 @@ namespace stypox::gl {
 		}
 	}
 
+	Tpath Texture2D::m_directory {""};
+
 	Texture2D::Texture2D(GLint position) :
 	m_position{position} {}
 	Texture2D::Texture2D(GLint position, const Tpath& filename, GLenum saveFormat, GLint detailLevel, bool relativeToDirectory) :

@@ -4,6 +4,7 @@
 #include <array>
 #include <GL/glew.h>
 #include <SOIL.h>
+#include <filesystem>
 #include <sp/basicTypes.h>
 #include <sp/declarations.h>
 
@@ -43,9 +44,5 @@ namespace stypox::gl {
 		void bind(GLint position);
 		static void unbind(GLint position);
 	};
-
-	Tpath Texture2D::m_directory {""};
 }
-
-#include "texture.cpp"
 #endif

@@ -41,6 +41,4 @@ namespace stypox::gl {
 		glBufferData(GL_ARRAY_BUFFER, N * sizeof(GLfloat), data.data(), usage);
 	}
 }
-
-#include "vbo.cpp"
 #endif
