@@ -2,7 +2,6 @@
 #define _STYPOX_VAO_H_
 
 #include <GL/glew.h>
-#include <sp/declarations.h>
 
 namespace stypox::gl {
 	class Vao {

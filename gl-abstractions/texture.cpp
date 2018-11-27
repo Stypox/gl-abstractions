@@ -1,6 +1,8 @@
 #include "texture.h"
 
 namespace stypox::gl {
+	using Tpath = std::filesystem::path;
+
 	constexpr GLenum channelsToFormat(int nrChannels) {
 		switch (nrChannels) {
 			case 1: return GL_R;

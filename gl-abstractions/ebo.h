@@ -3,7 +3,6 @@
 
 #include <array>
 #include <GL/glew.h>
-#include <sp/declarations.h>
 
 namespace stypox::gl {
 	class Ebo {

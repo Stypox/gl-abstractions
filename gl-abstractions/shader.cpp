@@ -1,6 +1,9 @@
 #include "shader.h"
 
 namespace stypox::gl {
+	using Tpath = std::filesystem::path;
+	using Tstr = std::string;
+
 	void Shader::create() {
 		remove();
 		m_programId = glCreateProgram();
@@ -50,7 +53,7 @@ namespace stypox::gl {
 	void Shader::compileFile(const Tpath& vertexShFilename, const Tpath& fragmentShFilename) {
 		m_fileLog = "";
 
-		File vertexFile{vertexShFilename},
+		stypox::File vertexFile{vertexShFilename},
 			fragmentFile{fragmentShFilename};
 		Tstr vertexSource{vertexFile.str()},
 			fragmentSource{fragmentFile.str()};

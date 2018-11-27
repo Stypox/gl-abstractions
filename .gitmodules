@@ -1,0 +1,3 @@
+[submodule "libs/file-management"]
+	path = libs/file-management
+	url = https://gitlab.com/Stypox/file-management

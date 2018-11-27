@@ -5,12 +5,10 @@
 #include <GL/glew.h>
 #include <SOIL.h>
 #include <filesystem>
-#include <sp/basicTypes.h>
-#include <sp/declarations.h>
 
 namespace stypox::gl {
 	class Texture2D {
-		static Tpath m_directory;
+		static std::filesystem::path m_directory;
 
 		GLuint m_id;
 		GLint m_position;
@@ -18,8 +16,8 @@ namespace stypox::gl {
 		bool m_fileOk = true;
 	public:
 		Texture2D(GLint position = 0);
-		Texture2D(GLint position, const Tpath& filename, GLenum saveFormat, GLint detailLevel = 0, bool relativeToDirectory = true);
-		Texture2D(GLint position, const Tpath& filename, GLenum saveFormat, GLenum wrapS, GLenum wrapT, GLenum minFilter, GLenum magFilter, GLint detailLevel = 0, bool relativeToDirectory = true);
+		Texture2D(GLint position, const std::filesystem::path& filename, GLenum saveFormat, GLint detailLevel = 0, bool relativeToDirectory = true);
+		Texture2D(GLint position, const std::filesystem::path& filename, GLenum saveFormat, GLenum wrapS, GLenum wrapT, GLenum minFilter, GLenum magFilter, GLint detailLevel = 0, bool relativeToDirectory = true);
 		~Texture2D();
 
 		Texture2D(const Texture2D& other) = delete;
@@ -29,13 +27,13 @@ namespace stypox::gl {
 
 		inline GLint position() { return m_position; }
 		inline void setPosition(GLint position) { m_position = position; }
-		inline static Tpath directory() { return m_directory; }
-		inline static void setDirectory(const Tpath& directory) { m_directory = directory; }
+		inline static std::filesystem::path directory() { return m_directory; }
+		inline static void setDirectory(const std::filesystem::path& directory) { m_directory = directory; }
 
 		void generate();
 		void remove();
 
-		void data(const Tpath& filename, GLenum saveFormat, GLint detailLevel = 0, bool relativeToDirectory = true);
+		void data(const std::filesystem::path& filename, GLenum saveFormat, GLint detailLevel = 0, bool relativeToDirectory = true);
 		void data(void * data, GLenum type, GLsizei width, GLsizei height, GLenum sourceFormat, GLenum saveFormat, GLint detailLevel = 0);
 		void parameters(GLenum wrapS, GLenum wrapT, GLenum minFilter, GLenum magFilter);
 
