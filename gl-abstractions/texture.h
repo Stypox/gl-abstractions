@@ -2,7 +2,7 @@
 #define _STYPOX_TEXTURE_H_
 
 #include <array>
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include <SOIL.h>
 #include <filesystem>
 
