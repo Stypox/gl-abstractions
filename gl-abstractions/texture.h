@@ -32,10 +32,14 @@ namespace stypox::gl {
 
 		void generate();
 		void remove();
+		inline bool generated() { return m_idGenerated; }
 
 		void data(const std::filesystem::path& filename, GLenum saveFormat, GLint detailLevel = 0, bool relativeToDirectory = true);
 		void data(void * data, GLenum type, GLsizei width, GLsizei height, GLenum sourceFormat, GLenum saveFormat, GLint detailLevel = 0);
 		void parameters(GLenum wrapS, GLenum wrapT, GLenum minFilter, GLenum magFilter);
+
+		inline bool fileOk() { return m_fileOk; }
+		std::string debugInfo(const std::string& name = "");
 
 		void bind();
 		void unbind();

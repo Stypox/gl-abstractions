@@ -1,6 +1,7 @@
 #include "texture.h"
 
 namespace stypox::gl {
+	using Tstr = std::string;
 	using Tpath = std::filesystem::path;
 
 	constexpr GLenum channelsToFormat(int nrChannels) {
@@ -15,14 +16,14 @@ namespace stypox::gl {
 	Tpath Texture2D::m_directory {""};
 
 	Texture2D::Texture2D(GLint position) :
-	m_position{position} {}
+		m_position{position} {}
 	Texture2D::Texture2D(GLint position, const Tpath& filename, GLenum saveFormat, GLint detailLevel, bool relativeToDirectory) :
-	m_position{position} {
+		m_position{position} {
 		generate();
 		data(filename, saveFormat, detailLevel, relativeToDirectory);
 	}
 	Texture2D::Texture2D(GLint position, const Tpath& filename, GLenum saveFormat, GLenum wrapS, GLenum wrapT, GLenum minFilter, GLenum magFilter, GLint detailLevel, bool relativeToDirectory) :
-	m_position{position} {
+		m_position{position} {
 		generate();
 		data(filename, saveFormat, detailLevel, relativeToDirectory);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
@@ -36,10 +37,10 @@ namespace stypox::gl {
 
 
 	Texture2D::Texture2D(Texture2D&& other) :
-	m_id{other.m_id},
-	m_position{other.m_position},
-	m_idGenerated{other.m_idGenerated},
-	m_fileOk{other.m_fileOk} {
+		m_id{other.m_id},
+		m_position{other.m_position},
+		m_idGenerated{other.m_idGenerated},
+		m_fileOk{other.m_fileOk} {
 		other.m_idGenerated = false;
 	}
 	Texture2D& Texture2D::operator= (Texture2D&& other) {
@@ -91,6 +92,13 @@ namespace stypox::gl {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+	}
+
+	Tstr Texture2D::debugInfo(const Tstr& name) {
+		return "Texture status id=" + std::to_string(m_id) +
+			",position=" + std::to_string(m_position) +
+			(name.empty() ? "" : ",name=" + name) +
+			(m_fileOk ? ": ok" : ": file error");
 	}
 
 	void Texture2D::bind() {

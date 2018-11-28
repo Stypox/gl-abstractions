@@ -19,7 +19,9 @@ namespace stypox::gl {
 		void generate();
 		void remove();
 
-		void attribPointer(GLuint index, GLint sizeOfSet, GLenum type, GLsizei strideOfSet, GLsizei offsetOfSet, GLboolean normalize = GL_FALSE);
+		static void enableAttrib(GLuint index);
+		static void attribPointer(GLuint index, GLint sizeOfSet, GLenum type, GLsizei strideOfSet, GLsizei offsetOfSet, GLboolean normalize = GL_FALSE);
+		static void attribDivisor(GLuint index, GLuint divisor);
 
 		inline void bind() { glBindVertexArray(m_id); }
 		inline static void unbind() { glBindVertexArray(0); }

@@ -26,8 +26,8 @@ namespace stypox::gl {
 	}
 
 	Vao::Vao(Vao&& other) :
-	m_id{other.m_id},
-	m_idGenerated{other.m_idGenerated} {
+		m_id{other.m_id},
+		m_idGenerated{other.m_idGenerated} {
 		other.m_idGenerated = false;
 	}
 	Vao& Vao::operator= (Vao&& other) {
@@ -54,9 +54,13 @@ namespace stypox::gl {
 		}
 	}
 
-	void Vao::attribPointer(GLuint index, GLint sizeOfSet, GLenum type, GLsizei strideOfSet, GLsizei offsetOfSet, GLboolean normalize) {
-		bind();
+	void Vao::enableAttrib(GLuint index) {
 		glEnableVertexAttribArray(index);
+	}
+	void Vao::attribPointer(GLuint index, GLint sizeOfSet, GLenum type, GLsizei strideOfSet, GLsizei offsetOfSet, GLboolean normalize) {
 		glVertexAttribPointer(index, sizeOfSet, type, normalize, strideOfSet * toSize(type), reinterpret_cast<void*>(offsetOfSet * toSize(type)));
+	}
+	void Vao::attribDivisor(GLuint index, GLuint divisor) {
+		glVertexAttribDivisor(index, divisor);
 	}
 }

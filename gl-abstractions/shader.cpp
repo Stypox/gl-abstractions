@@ -1,7 +1,6 @@
 #include "shader.h"
 
 namespace stypox::gl {
-	using Tpath = std::filesystem::path;
 	using Tstr = std::string;
 
 	void Shader::create() {
@@ -13,7 +12,7 @@ namespace stypox::gl {
 	}
 
 	Shader::Shader() {}
-	Shader::Shader(const Tpath& vertexShFilename, const Tpath& fragmentShFilename) {
+	Shader::Shader(const std::filesystem::path& vertexShFilename, const std::filesystem::path& fragmentShFilename) {
 		compileFile(vertexShFilename, fragmentShFilename);
 	}
 	Shader::~Shader() {
@@ -21,11 +20,11 @@ namespace stypox::gl {
 	}
 
 	Shader::Shader(Shader&& other) :
-	m_vertexShId{other.m_vertexShId},
-	m_fragmentShId{other.m_fragmentShId},
-	m_programId{other.m_programId},
-	m_fileLog{std::move(other.m_fileLog)},
-	m_idsCreated{other.m_idsCreated} {
+		m_vertexShId{other.m_vertexShId},
+		m_fragmentShId{other.m_fragmentShId},
+		m_programId{other.m_programId},
+		m_fileLog{std::move(other.m_fileLog)},
+		m_idsCreated{other.m_idsCreated} {
 		other.m_idsCreated = false;
 	}
 	Shader& Shader::operator= (Shader&& other) {
@@ -50,10 +49,10 @@ namespace stypox::gl {
 		}
 	}
 	
-	void Shader::compileFile(const Tpath& vertexShFilename, const Tpath& fragmentShFilename) {
+	void Shader::compileFile(const std::filesystem::path& vertexShFilename, const std::filesystem::path& fragmentShFilename) {
 		m_fileLog = "";
 
-		stypox::File vertexFile{vertexShFilename},
+		File vertexFile{vertexShFilename},
 			fragmentFile{fragmentShFilename};
 		Tstr vertexSource{vertexFile.str()},
 			fragmentSource{fragmentFile.str()};
@@ -91,7 +90,7 @@ namespace stypox::gl {
 		glGetShaderiv(m_fragmentShId, GL_COMPILE_STATUS, &fragmentStatus);
 		glGetProgramiv(m_programId, GL_LINK_STATUS, &programStatus);
 
-		if (m_fileLog.length() != 0)
+		if (!m_fileLog.empty())
 			err |= file;
 		if (vertexStatus == 0)
 			err |= vertex;
@@ -124,7 +123,7 @@ namespace stypox::gl {
 			return "";
 		}
 	}
-	Tstr Shader::debugInfo(Tstr name) {
+	Tstr Shader::debugInfo(const Tstr& name) {
 		Tstr info{"Shader status id=" + std::to_string(m_programId) + (name.empty() ? "" : ",name=" + name) + ": "};
 		
 		if (Step status{errors()}; status) {
@@ -139,7 +138,7 @@ namespace stypox::gl {
 				info += "Program: " + getLog(program) + ";\n";
 		}
 		else {
-			info += "ok\n";
+			info += "ok";
 		}
 
 		return info;

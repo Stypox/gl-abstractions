@@ -44,7 +44,7 @@ namespace stypox::gl {
 
 		Step errors();
 		std::string getLog(Step step);
-		std::string debugInfo(std::string name = "");
+		std::string debugInfo(const std::string& name = "");
 
 		inline void bind() { glUseProgram(m_programId); }
 		inline static void unbind() { glUseProgram(0); }

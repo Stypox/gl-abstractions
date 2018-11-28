@@ -7,8 +7,8 @@ namespace stypox::gl {
 	}
 
 	Ebo::Ebo(Ebo&& other) :
-	m_id{other.m_id},
-	m_idGenerated{other.m_idGenerated} {
+		m_id{other.m_id},
+		m_idGenerated{other.m_idGenerated} {
 		other.m_idGenerated = false;
 	}
 	Ebo& Ebo::operator= (Ebo&& other) {

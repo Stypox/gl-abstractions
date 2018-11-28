@@ -2,6 +2,7 @@
 #define _STYPOX_VBO_H_
 
 #include <array>
+#include <vector>
 #include <glad/glad.h>
 
 namespace stypox::gl {
@@ -12,6 +13,7 @@ namespace stypox::gl {
 		Vbo();
 		template <size_t N>
 		Vbo(const std::array<GLfloat, N>& data, GLenum usage);
+		Vbo(const std::vector<GLfloat> data, GLenum usage);
 		~Vbo();
 
 		Vbo(const Vbo& other) = delete;
@@ -24,13 +26,15 @@ namespace stypox::gl {
 
 		template <size_t N>
 		void data(const std::array<GLfloat, N>& data, GLenum usage);
+		void data(const std::vector<GLfloat> data, GLenum usage);
 
 		inline void bind() { glBindBuffer(GL_ARRAY_BUFFER, m_id); }
 		inline static void unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 	};
 
 	template <size_t N>
-	inline Vbo::Vbo(const std::array<GLfloat, N>& data, GLenum usage) {
+	inline Vbo::Vbo(const std::array<GLfloat, N>& data, GLenum usage) :
+		m_idGenerated{true} {
 		glGenBuffers(1, &m_id);
 		this->data(data, usage);
 	}
