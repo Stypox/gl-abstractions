@@ -6,17 +6,16 @@ ifeq ($(GLAD_PATH),)
  $(warning Using default glad path `./`. Ignore this if cleaning. Look at first three lines in Makefile to solve.)
 endif
 
-CXX = g++
-CXXFLAGS := -Wall -std=c++17 -I$(GLAD_PATH)/include/
-
 SRC = gl-abstractions/
 LIBS_PATH = libs/
 
+CXX = g++
+CXXFLAGS := -Wall -std=c++17 -I$(GLAD_PATH)/include -I$(LIBS_PATH)file-management/file-management
+
 OBJECT_FILES = $(SRC)ebo.o $(SRC)shader.o $(SRC)texture.o $(SRC)vao.o $(SRC)vbo.o
-OBJECT_FILES_GENERATED_BY_LIBS = $(LIBS_PATH)file-management/file_management.o
 .PHONY: $(OBJECT_FILES_GENERATED_BY_LIBS)
 
-gl_abstractions.o: $(OBJECT_FILES_GENERATED_BY_LIBS) $(OBJECT_FILES)
+gl_abstractions.o: $(OBJECT_FILES)
 	ld -r $(OBJECT_FILES) -o gl_abstractions.o
 
 #src
@@ -30,9 +29,6 @@ $(SRC)vao.o: $(SRC)vao.h $(SRC)vao.cpp
 	$(CXX) $(CXXFLAGS) -c $(SRC)vao.cpp -o $(SRC)vao.o
 $(SRC)vbo.o: $(SRC)vbo.h $(SRC)vbo.cpp
 	$(CXX) $(CXXFLAGS) -c $(SRC)vbo.cpp -o $(SRC)vbo.o
-
-$(LIBS_PATH)file-management/file_management.o:
-	cd $(LIBS_PATH)file-management && make
 
 clean:
 	rm $(OBJECT_FILES) gl_abstractions.o

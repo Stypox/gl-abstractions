@@ -8,7 +8,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_precision.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "../libs/file-management/file-management/file_management.h"
+#include "file_management.h"
 
 namespace stypox::gl {
 	constexpr int maxInfoLogCharacters{512};
