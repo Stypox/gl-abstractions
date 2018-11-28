@@ -6,6 +6,7 @@ namespace stypox::gl {
 
 	constexpr GLenum channelsToFormat(int nrChannels) {
 		switch (nrChannels) {
+			case 1: return GL_RED;
 			case 2: return GL_RG;
 			case 3: return GL_RGB;
 			case 4: return GL_RGBA;
