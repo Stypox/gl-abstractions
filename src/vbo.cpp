@@ -1,4 +1,4 @@
-#include "vbo.h"
+#include "../include/stypox/gl/vbo.h"
 
 namespace stypox::gl {
 	Vbo::Vbo() {}

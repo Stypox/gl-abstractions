@@ -1,4 +1,4 @@
-#include "texture.h"
+#include "../include/stypox/gl/texture.h"
 
 namespace stypox::gl {
 	using Tstr = std::string;

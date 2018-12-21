@@ -1,4 +1,4 @@
-#include "vao.h"
+#include "../include/stypox/gl/vao.h"
 
 namespace stypox::gl {
 	constexpr GLuint toSize(GLenum type) {

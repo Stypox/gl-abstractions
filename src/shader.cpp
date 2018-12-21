@@ -1,4 +1,4 @@
-#include "shader.h"
+#include "../include/stypox/gl/shader.h"
 
 namespace stypox::gl {
 	using Tstr = std::string;
