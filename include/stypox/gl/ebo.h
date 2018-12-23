@@ -10,8 +10,8 @@ namespace stypox::gl {
 		bool m_idGenerated = false;
 	public:
 		Ebo();
-		template <size_t N>
-		Ebo(const std::array<GLuint, N>& data, GLenum usage);
+		template <class T>
+		Ebo(T* pointer, size_t count, GLenum usage);
 		~Ebo();
 
 		Ebo(const Ebo& other) = delete;
@@ -22,22 +22,18 @@ namespace stypox::gl {
 		void generate();
 		void remove();
 
-		template <size_t N>
-		void data(const std::array<GLuint, N>& data, GLenum usage);
+		template <class T>
+		void data(T* pointer, size_t count, GLenum usage) { bind(); glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(T), pointer, usage); }
 
 		inline void bind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id); }
 		inline static void unbind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); }
 	};
 
-	template <size_t N>
-	inline Ebo::Ebo(const std::array<GLuint, N>& data, GLenum usage) {
+	template <class T>
+	inline Ebo::Ebo(T* pointer, size_t count, GLenum usage) :
+		m_idGenerated{true} {
 		glGenBuffers(1, &m_id);
-		this->data(data, usage);
-	}
-	template <size_t N>
-	inline void Ebo::data(const std::array<GLuint, N>& data, GLenum usage) {
-		bind();
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, N * sizeof(GLuint), data.data(), usage);
+		this->data(pointer, count, usage);
 	}
 }
 #endif

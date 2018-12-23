@@ -11,9 +11,8 @@ namespace stypox::gl {
 		bool m_idGenerated = false;
 	public:
 		Vbo();
-		template <size_t N>
-		Vbo(const std::array<GLfloat, N>& data, GLenum usage);
-		Vbo(const std::vector<GLfloat> data, GLenum usage);
+		template <class T>
+		Vbo(T* pointer, size_t count, GLenum usage);
 		~Vbo();
 
 		Vbo(const Vbo& other) = delete;
@@ -24,24 +23,18 @@ namespace stypox::gl {
 		void generate();
 		void remove();
 
-		template <size_t N>
-		void data(const std::array<GLfloat, N>& data, GLenum usage);
-		void data(const std::vector<GLfloat> data, GLenum usage);
+		template <class T>
+		void data(T* pointer, size_t count, GLenum usage) { bind(); glBufferData(GL_ARRAY_BUFFER, count * sizeof(T), pointer, usage); }
 
 		inline void bind() { glBindBuffer(GL_ARRAY_BUFFER, m_id); }
 		inline static void unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 	};
 
-	template <size_t N>
-	inline Vbo::Vbo(const std::array<GLfloat, N>& data, GLenum usage) :
+	template <class T>
+	inline Vbo::Vbo(T* pointer, size_t count, GLenum usage) :
 		m_idGenerated{true} {
 		glGenBuffers(1, &m_id);
-		this->data(data, usage);
-	}
-	template <size_t N>
-	inline void Vbo::data(const std::array<GLfloat, N>& data, GLenum usage) {
-		bind();
-		glBufferData(GL_ARRAY_BUFFER, N * sizeof(GLfloat), data.data(), usage);
+		this->data(pointer, count, usage);
 	}
 }
 #endif
