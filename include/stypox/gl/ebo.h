@@ -1,7 +1,6 @@
 #ifndef _STYPOX_EBO_H_
 #define _STYPOX_EBO_H_
 
-#include <array>
 #include <glad/glad.h>
 
 namespace stypox::gl {

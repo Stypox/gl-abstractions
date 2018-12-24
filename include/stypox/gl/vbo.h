@@ -1,8 +1,6 @@
 #ifndef _STYPOX_VBO_H_
 #define _STYPOX_VBO_H_
 
-#include <array>
-#include <vector>
 #include <glad/glad.h>
 
 namespace stypox::gl {

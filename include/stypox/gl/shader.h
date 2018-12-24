@@ -3,7 +3,6 @@
 //TODO functions like getAttribLocation should save errors in a log. glGetnUniform gives errors and could be useful.
 
 #include <string>
-#include <memory>
 #include <glad/glad.h>
 #include <filesystem>
 

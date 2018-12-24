@@ -1,5 +1,7 @@
 #include "../include/stypox/gl/texture.h"
 
+#include <SOIL.h>
+
 namespace stypox::gl {
 	using Tstr = std::string;
 	using Tpath = std::filesystem::path;
