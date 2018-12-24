@@ -11,10 +11,9 @@ INC = include/
 LIBS_PATH = libs/
 
 CXX = g++
-CXXFLAGS := -Wall -std=c++17 -I$(GLAD_PATH)/include -I$(LIBS_PATH)file-management/include
+CXXFLAGS := -Wall -std=c++17 -I$(GLAD_PATH)/include
 
 OBJECT_FILES = $(SRC)ebo.o $(SRC)shader.o $(SRC)texture.o $(SRC)vao.o $(SRC)vbo.o
-.PHONY: $(OBJECT_FILES_GENERATED_BY_LIBS)
 
 gl_abstractions.o: $(OBJECT_FILES)
 	ld -r $(OBJECT_FILES) -o gl_abstractions.o
@@ -33,4 +32,3 @@ $(SRC)vbo.o: $(INC)stypox/gl/vbo.h $(SRC)vbo.cpp
 
 clean:
 	rm $(OBJECT_FILES) gl_abstractions.o
-	cd $(LIBS_PATH)file-management && make clean
