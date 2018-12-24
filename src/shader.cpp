@@ -1,7 +1,31 @@
 #include "../include/stypox/gl/shader.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/type_precision.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <fstream>
+
 namespace stypox::gl {
-	using Tstr = std::string;
+	using std::string;
+
+	string readAllFile(std::filesystem::path path, string& log) {
+		std::ifstream file{path, std::ios::binary};
+		if (!file.is_open()) {
+			log += "Unable to read shader source code from \"" + path.string() + "\"; ";
+			return "";
+		}
+
+		char tempChar;
+		string fileStr = "";
+		fileStr.reserve(std::filesystem::file_size(path));
+		while (1) {
+			tempChar = file.get();
+			if (file.eof()) break;
+			fileStr += tempChar;
+		}
+
+		return fileStr;
+	}
 
 	void Shader::create() {
 		remove();
@@ -39,7 +63,7 @@ namespace stypox::gl {
 		}
 		return *this;
 	}
-	
+
 	void Shader::remove() {
 		if (m_idsCreated) {
 			glDeleteProgram(m_programId);
@@ -48,25 +72,15 @@ namespace stypox::gl {
 			m_idsCreated = false;
 		}
 	}
-	
+
 	void Shader::compileFile(const std::filesystem::path& vertexShFilename, const std::filesystem::path& fragmentShFilename) {
 		m_fileLog = "";
 
-		File vertexFile{vertexShFilename},
-			fragmentFile{fragmentShFilename};
-		Tstr vertexSource{vertexFile.str()},
-			fragmentSource{fragmentFile.str()};
-
-		if (!vertexFile.isOpen()) {
-			m_fileLog += "Unable to read vertex shader source code from \"" + vertexShFilename.string() + "\"; ";
-		}
-		if (!fragmentFile.isOpen()) {
-			m_fileLog += "Unable to read fragment shader source code from \"" + fragmentShFilename.string() + "\"; ";
-		}
-
-		compileSource(vertexSource, fragmentSource);
+		compileSource(
+			readAllFile(vertexShFilename, m_fileLog),
+			readAllFile(fragmentShFilename, m_fileLog));
 	}
-	void Shader::compileSource(const Tstr& vertexShSource, const Tstr& fragmentShSource) {
+	void Shader::compileSource(const string& vertexShSource, const string& fragmentShSource) {
 		create();
 
 		const char * vertexShCStr = vertexShSource.c_str(),
@@ -100,7 +114,7 @@ namespace stypox::gl {
 			err |= program;
 		return err;
 	}
-	Tstr Shader::getLog(Step step) {
+	string Shader::getLog(Step step) {
 		switch (step) {
 		case file:
 			return m_fileLog;
@@ -123,9 +137,9 @@ namespace stypox::gl {
 			return "";
 		}
 	}
-	Tstr Shader::debugInfo(const Tstr& name) {
-		Tstr info{"Shader status id=" + std::to_string(m_programId) + (name.empty() ? "" : ",name=" + name) + ": "};
-		
+	string Shader::debugInfo(const string& name) {
+		string info{"Shader status id=" + std::to_string(m_programId) + (name.empty() ? "" : ",name=" + name) + ": "};
+
 		if (Step status{errors()}; status) {
 			info += "errors\n";
 			if (status & file)
@@ -144,165 +158,165 @@ namespace stypox::gl {
 		return info;
 	}
 
-	GLint Shader::getAttribLocation(const Tstr& attributeVariableName) {
+	GLint Shader::getAttribLocation(const string& attributeVariableName) {
 		return glGetAttribLocation(m_programId, attributeVariableName.c_str());
 	}
 
 
 	//float
-	template<> void Shader::uniform(const Tstr& uniformName, const GLfloat& v0) {
+	template<> void Shader::uniform(const string& uniformName, const GLfloat& v0) {
 		bind();
 		glUniform1f(glGetUniformLocation(m_programId, uniformName.c_str()), v0);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const GLfloat& v0, const GLfloat& v1) {
+	template<> void Shader::uniform(const string& uniformName, const GLfloat& v0, const GLfloat& v1) {
 		bind();
 		glUniform2f(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const GLfloat& v0, const GLfloat& v1, const GLfloat& v2) {
+	template<> void Shader::uniform(const string& uniformName, const GLfloat& v0, const GLfloat& v1, const GLfloat& v2) {
 		bind();
 		glUniform3f(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const GLfloat& v0, const GLfloat& v1, const GLfloat& v2, const GLfloat& v3) {
+	template<> void Shader::uniform(const string& uniformName, const GLfloat& v0, const GLfloat& v1, const GLfloat& v2, const GLfloat& v3) {
 		bind();
 		glUniform4f(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2, v3);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const std::initializer_list<GLfloat>& v0) {
+	template<> void Shader::uniform(const string& uniformName, const std::initializer_list<GLfloat>& v0) {
 		bind();
 		glUniform1fv(glGetUniformLocation(m_programId, uniformName.c_str()), v0.size(), v0.begin());
 	}
 
 	//int
-	template<> void Shader::uniform(const Tstr& uniformName, const GLint& v0) {
+	template<> void Shader::uniform(const string& uniformName, const GLint& v0) {
 		bind();
 		glUniform1i(glGetUniformLocation(m_programId, uniformName.c_str()), v0);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const GLint& v0, const GLint& v1) {
+	template<> void Shader::uniform(const string& uniformName, const GLint& v0, const GLint& v1) {
 		bind();
 		glUniform2i(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const GLint& v0, const GLint& v1, const GLint& v2) {
+	template<> void Shader::uniform(const string& uniformName, const GLint& v0, const GLint& v1, const GLint& v2) {
 		bind();
 		glUniform3i(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const GLint& v0, const GLint& v1, const GLint& v2, const GLint& v3) {
+	template<> void Shader::uniform(const string& uniformName, const GLint& v0, const GLint& v1, const GLint& v2, const GLint& v3) {
 		bind();
 		glUniform4i(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2, v3);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const std::initializer_list<GLint>& v0) {
+	template<> void Shader::uniform(const string& uniformName, const std::initializer_list<GLint>& v0) {
 		bind();
 		glUniform1iv(glGetUniformLocation(m_programId, uniformName.c_str()), v0.size(), v0.begin());
 	}
 
 	//unsigned int
-	template<> void Shader::uniform(const Tstr& uniformName, const GLuint& v0) {
+	template<> void Shader::uniform(const string& uniformName, const GLuint& v0) {
 		bind();
-		glUniform1ui(glGetUniformLocation(m_programId, uniformName.c_str()), v0);	
+		glUniform1ui(glGetUniformLocation(m_programId, uniformName.c_str()), v0);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const GLuint& v0, const GLuint& v1) {
+	template<> void Shader::uniform(const string& uniformName, const GLuint& v0, const GLuint& v1) {
 		bind();
 		glUniform2ui(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const GLuint& v0, const GLuint& v1, const GLuint& v2) {
+	template<> void Shader::uniform(const string& uniformName, const GLuint& v0, const GLuint& v1, const GLuint& v2) {
 		bind();
 		glUniform3ui(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const GLuint& v0, const GLuint& v1, const GLuint& v2, const GLuint& v3) {
+	template<> void Shader::uniform(const string& uniformName, const GLuint& v0, const GLuint& v1, const GLuint& v2, const GLuint& v3) {
 		bind();
 		glUniform4ui(glGetUniformLocation(m_programId, uniformName.c_str()), v0, v1, v2, v3);
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const std::initializer_list<GLuint>& v0) {
+	template<> void Shader::uniform(const string& uniformName, const std::initializer_list<GLuint>& v0) {
 		bind();
 		glUniform1uiv(glGetUniformLocation(m_programId, uniformName.c_str()), v0.size(), v0.begin());
 	}
 
 	//matrices (transpose disabled by default)
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2& value) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat2& value) {
 		bind();
 		glUniformMatrix2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3& value) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat3& value) {
 		bind();
 		glUniformMatrix3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4& value) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat4& value) {
 		bind();
 		glUniformMatrix4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2x3& value) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat2x3& value) {
 		bind();
 		glUniformMatrix2x3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3x2& value) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat3x2& value) {
 		bind();
 		glUniformMatrix3x2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2x4& value) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat2x4& value) {
 		bind();
 		glUniformMatrix2x4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4x2& value) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat4x2& value) {
 		bind();
 		glUniformMatrix4x2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3x4& value) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat3x4& value) {
 		bind();
 		glUniformMatrix3x4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4x3& value) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat4x3& value) {
 		bind();
 		glUniformMatrix4x3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, false, glm::value_ptr(value));
 	}
 
 	//matrices (transpose chosen manually)
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2& value, GLboolean transpose) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat2& value, GLboolean transpose) {
 		bind();
 		glUniformMatrix2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3& value, GLboolean transpose) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat3& value, GLboolean transpose) {
 		bind();
 		glUniformMatrix3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4& value, GLboolean transpose) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat4& value, GLboolean transpose) {
 		bind();
 		glUniformMatrix4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2x3& value, GLboolean transpose) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat2x3& value, GLboolean transpose) {
 		bind();
 		glUniformMatrix2x3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3x2& value, GLboolean transpose) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat3x2& value, GLboolean transpose) {
 		bind();
 		glUniformMatrix3x2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat2x4& value, GLboolean transpose) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat2x4& value, GLboolean transpose) {
 		bind();
 		glUniformMatrix2x4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4x2& value, GLboolean transpose) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat4x2& value, GLboolean transpose) {
 		bind();
 		glUniformMatrix4x2fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat3x4& value, GLboolean transpose) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat3x4& value, GLboolean transpose) {
 		bind();
 		glUniformMatrix3x4fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
-	template<> void Shader::uniform(const Tstr& uniformName, const glm::mat4x3& value, GLboolean transpose) {
+	template<> void Shader::uniform(const string& uniformName, const glm::mat4x3& value, GLboolean transpose) {
 		bind();
 		glUniformMatrix4x3fv(glGetUniformLocation(m_programId, uniformName.c_str()), 1, transpose, glm::value_ptr(value));
 	}
 
 	//single values
-	template<> GLfloat Shader::getUniform(const Tstr& uniformName) {
+	template<> GLfloat Shader::getUniform(const string& uniformName) {
 		GLfloat uniform;
 		glGetUniformfv(m_programId, glGetUniformLocation(m_programId, uniformName.c_str()), &uniform);
 		return uniform;
 	}
-	template<> GLint Shader::getUniform(const Tstr& uniformName) {
+	template<> GLint Shader::getUniform(const string& uniformName) {
 		GLint uniform;
 		glGetUniformiv(m_programId, glGetUniformLocation(m_programId, uniformName.c_str()), &uniform);
 		return uniform;
 	}
-	template<> GLuint Shader::getUniform(const Tstr& uniformName) {
+	template<> GLuint Shader::getUniform(const string& uniformName) {
 		GLuint uniform;
 		glGetUniformuiv(m_programId, glGetUniformLocation(m_programId, uniformName.c_str()), &uniform);
 		return uniform;
@@ -311,7 +325,7 @@ namespace stypox::gl {
 	//GLfloat
 	template<typename T, int N>
 		typename std::enable_if<std::is_same<T, GLfloat>::value, std::array<T, N>>::type
-		Shader::getUniform(const Tstr& uniformName)
+		Shader::getUniform(const string& uniformName)
 	{
 		static_assert(N > 0, "getUniform requires a number of values grater than 0");
 		std::array<T, N> uniform;
@@ -321,7 +335,7 @@ namespace stypox::gl {
 	//GLint
 	template<typename T, int N>
 		typename std::enable_if<std::is_same<T, GLint>::value, std::array<T, N>>::type
-		Shader::getUniform(const Tstr& uniformName)
+		Shader::getUniform(const string& uniformName)
 	{
 		static_assert(N > 0, "getUniform requires a number of values grater than 0");
 		std::array<T, N> uniform;
@@ -331,7 +345,7 @@ namespace stypox::gl {
 	//GLuint
 	template<typename T, int N>
 		typename std::enable_if<std::is_same<T, GLuint>::value, std::array<T, N>>::type
-		Shader::getUniform(const Tstr& uniformName)
+		Shader::getUniform(const string& uniformName)
 	{
 		static_assert(N > 0, "getUniform requires a number of values grater than 0");
 		std::array<T, N> uniform;
@@ -341,37 +355,37 @@ namespace stypox::gl {
 	//neither GLfloat, GLint nor GLuint (error)
 	template<typename T, int N>
 		typename std::enable_if<!std::is_same<T, GLfloat>::value && !std::is_same<T, GLint>::value && !std::is_same<T, GLuint>::value, void>::type
-		Shader::getUniform(const Tstr& uniformName)
+		Shader::getUniform(const string& uniformName)
 	{
 		static_assert(N > 0, "getUniform requires a number of values grater than 0");
 		static_assert(std::is_same<T, GLfloat>::value || std::is_same<T, GLint>::value || std::is_same<T, GLuint>::value, "getUniform type must be either GLfloat, GLint or GLuint");
 	}
 
-	template<> glm::mat2 Shader::getUniform(const Tstr& uniformName) {
+	template<> glm::mat2 Shader::getUniform(const string& uniformName) {
 		return glm::make_mat2(getUniform<GLfloat, 4>(uniformName).data());
 	}
-	template<> glm::mat3 Shader::getUniform(const Tstr& uniformName) {
+	template<> glm::mat3 Shader::getUniform(const string& uniformName) {
 		return glm::make_mat3(getUniform<GLfloat, 9>(uniformName).data());
 	}
-	template<> glm::mat4 Shader::getUniform(const Tstr& uniformName) {
+	template<> glm::mat4 Shader::getUniform(const string& uniformName) {
 		return glm::make_mat4(getUniform<GLfloat, 16>(uniformName).data());
 	}
-	template<> glm::mat2x3 Shader::getUniform(const Tstr& uniformName) {
+	template<> glm::mat2x3 Shader::getUniform(const string& uniformName) {
 		return glm::make_mat2x3(getUniform<GLfloat, 6>(uniformName).data());
 	}
-	template<> glm::mat3x2 Shader::getUniform(const Tstr& uniformName) {
+	template<> glm::mat3x2 Shader::getUniform(const string& uniformName) {
 		return glm::make_mat3x2(getUniform<GLfloat, 6>(uniformName).data());
 	}
-	template<> glm::mat2x4 Shader::getUniform(const Tstr& uniformName) {
+	template<> glm::mat2x4 Shader::getUniform(const string& uniformName) {
 		return glm::make_mat2x4(getUniform<GLfloat, 8>(uniformName).data());
 	}
-	template<> glm::mat4x2 Shader::getUniform(const Tstr& uniformName) {
+	template<> glm::mat4x2 Shader::getUniform(const string& uniformName) {
 		return glm::make_mat4x2(getUniform<GLfloat, 8>(uniformName).data());
 	}
-	template<> glm::mat3x4 Shader::getUniform(const Tstr& uniformName) {
+	template<> glm::mat3x4 Shader::getUniform(const string& uniformName) {
 		return glm::make_mat3x4(getUniform<GLfloat, 12>(uniformName).data());
 	}
-	template<> glm::mat4x3 Shader::getUniform(const Tstr& uniformName) {
+	template<> glm::mat4x3 Shader::getUniform(const string& uniformName) {
 		return glm::make_mat4x3(getUniform<GLfloat, 12>(uniformName).data());
 	}
 }

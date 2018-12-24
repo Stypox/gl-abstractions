@@ -5,10 +5,7 @@
 #include <string>
 #include <memory>
 #include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/type_precision.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <stypox/file_management.h>
+#include <filesystem>
 
 namespace stypox::gl {
 	constexpr int maxInfoLogCharacters{512};
