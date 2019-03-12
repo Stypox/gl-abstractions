@@ -1,5 +1,5 @@
-#ifndef _STYPOX_EBO_H_
-#define _STYPOX_EBO_H_
+#ifndef _STYPOX_GL_EBO_HPP_
+#define _STYPOX_GL_EBO_HPP_
 
 #include <glad/glad.h>
 

@@ -1,4 +1,4 @@
-#include "../include/stypox/gl/ebo.h"
+#include "../include/stypox/gl/ebo.hpp"
 
 namespace stypox::gl {
 	Ebo::Ebo() {}

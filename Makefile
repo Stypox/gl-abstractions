@@ -19,15 +19,15 @@ gl_abstractions.o: $(OBJECT_FILES)
 	ld -r $(OBJECT_FILES) -o gl_abstractions.o
 
 #src
-$(SRC)ebo.o: $(INC)stypox/gl/ebo.h $(SRC)ebo.cpp
+$(SRC)ebo.o: $(INC)stypox/gl/ebo.hpp $(SRC)ebo.cpp
 	$(CXX) $(CXXFLAGS) -c $(SRC)ebo.cpp -o $(SRC)ebo.o
-$(SRC)shader.o: $(INC)stypox/gl/shader.h $(SRC)shader.cpp
+$(SRC)shader.o: $(INC)stypox/gl/shader.hpp $(SRC)shader.cpp
 	$(CXX) $(CXXFLAGS) -c $(SRC)shader.cpp -o $(SRC)shader.o
-$(SRC)texture.o: $(INC)stypox/gl/texture.h $(SRC)texture.cpp
+$(SRC)texture.o: $(INC)stypox/gl/texture.hpp $(SRC)texture.cpp
 	$(CXX) $(CXXFLAGS) -c $(SRC)texture.cpp -o $(SRC)texture.o
-$(SRC)vao.o: $(INC)stypox/gl/vao.h $(SRC)vao.cpp
+$(SRC)vao.o: $(INC)stypox/gl/vao.hpp $(SRC)vao.cpp
 	$(CXX) $(CXXFLAGS) -c $(SRC)vao.cpp -o $(SRC)vao.o
-$(SRC)vbo.o: $(INC)stypox/gl/vbo.h $(SRC)vbo.cpp
+$(SRC)vbo.o: $(INC)stypox/gl/vbo.hpp $(SRC)vbo.cpp
 	$(CXX) $(CXXFLAGS) -c $(SRC)vbo.cpp -o $(SRC)vbo.o
 
 clean:

@@ -1,5 +1,5 @@
-#ifndef _STYPOX_TEXTURE_H_
-#define _STYPOX_TEXTURE_H_
+#ifndef _STYPOX_GL_TEXTURE_HPP_
+#define _STYPOX_GL_TEXTURE_HPP_
 
 #include <glad/glad.h>
 #include <filesystem>

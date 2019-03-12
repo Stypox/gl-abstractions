@@ -1,4 +1,4 @@
-#include "../include/stypox/gl/shader.h"
+#include "../include/stypox/gl/shader.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_precision.hpp>

@@ -1,5 +1,5 @@
-#ifndef _STYPOX_VAO_H_
-#define _STYPOX_VAO_H_
+#ifndef _STYPOX_GL_VAO_HPP_
+#define _STYPOX_GL_VAO_HPP_
 
 #include <glad/glad.h>
 

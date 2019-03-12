@@ -1,5 +1,5 @@
-#ifndef _STYPOX_VBO_H_
-#define _STYPOX_VBO_H_
+#ifndef _STYPOX_GL_VBO_HPP_
+#define _STYPOX_GL_VBO_HPP_
 
 #include <glad/glad.h>
 

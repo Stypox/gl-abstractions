@@ -1,4 +1,4 @@
-#include "../include/stypox/gl/texture.h"
+#include "../include/stypox/gl/texture.hpp"
 
 #include <SOIL.h>
 
