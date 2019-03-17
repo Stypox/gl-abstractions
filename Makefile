@@ -8,7 +8,6 @@ endif
 
 SRC = src/
 INC = include/
-LIBS_PATH = libs/
 
 CXX = g++
 CXXFLAGS := -Wall -std=c++17 -I$(GLAD_PATH)/include
