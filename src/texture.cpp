@@ -1,6 +1,6 @@
 #include "../include/stypox/gl/texture.hpp"
 
-#include <SOIL.h>
+#include <SOIL/SOIL.h>
 
 namespace stypox::gl {
 	using Tstr = std::string;
