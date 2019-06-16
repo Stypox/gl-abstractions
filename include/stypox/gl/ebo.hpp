@@ -2,6 +2,7 @@
 #define _STYPOX_GL_EBO_HPP_
 
 #include <glad/glad.h>
+#include <stddef.h>
 
 namespace stypox::gl {
 	class Ebo {

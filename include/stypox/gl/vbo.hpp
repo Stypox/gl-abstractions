@@ -2,6 +2,7 @@
 #define _STYPOX_GL_VBO_HPP_
 
 #include <glad/glad.h>
+#include <stddef.h>
 
 namespace stypox::gl {
 	class Vbo {
